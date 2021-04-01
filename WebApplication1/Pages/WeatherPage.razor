@@ -1,0 +1,60 @@
+﻿@page "/weather"
+@inject HttpClient Http
+
+<h3>Weather</h3>
+
+
+<form id='weatherForm' @onclick:preventDefault="true">
+    <label for="zip">Zip Code</label>
+    <input type="text" @bind-value="zipcode" name="zip" id="zip" required />
+    <input type="submit" @onclick="GetForecastAsync" value="Get Weather!" />
+</form>
+@if (f != null)
+{
+    <div>
+        @f.Name
+        @f.main.Temp
+        @f.main.Feels_Like
+    </div>
+}
+
+@code {
+    public Forecast f;
+    public string zipcode { get; set; }
+    public string path = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=0c9d70b001a131ec1b7798400723c28a&zip=";
+
+    public async void GetForecastAsync()
+    {
+        f = await Http.GetFromJsonAsync<Forecast>(path + zipcode);
+    }
+    
+    // overall forecast container
+    public class Forecast 
+    {
+        public string Name { get; set; }
+
+        public Main main { get; set; }
+    }
+
+    public class WeatherObj
+    {
+        public string Main { get; set; }
+
+        public string Description { get; set; }
+    }
+
+    // container for the 'main' attribute
+    public class Main
+    {
+        public decimal Temp { get; set; }
+        public decimal Feels_Like { get; set; }
+    }
+
+    public class Weather
+    {
+        public string Main { get; set; }
+        public string Description {get; set;}
+    }
+
+
+}
