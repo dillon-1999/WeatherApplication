@@ -16,38 +16,40 @@
     <div>
         <br />
         <h3>Weather For @f.Name</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Temperature</th>
-                    <th>Feels Like</th>
-                </tr>
-            </thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" >Temperature</th>
+                        <th scope="col">Feels Like</th>
+                    </tr>
+                </thead>
      
-            <tr>
-                <td>@f.main.Temp</td>
-                <td>@f.main.Feels_Like</td>
-            </tr>
-        </table>
+                <tr>
+                    <td>@f.main.Temp</td>
+                    <td>@f.main.Feels_Like</td>
+                </tr>
+            </table>
     </div>
     @if (f.weather.Length > 0) // f.weather is an array of objects. It can have 0 - indiscernible amount
     {
         <h3>Weather Specifics</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            @foreach (Weather i in f.weather)
-            {
-                <tr>
-                    <td>@i.Main</td>
-                    <td>@i.Description</td>
-                </tr>
-            }
-        </table>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                @foreach (Weather i in f.weather)
+                {
+                    <tr>
+                        <td>@i.Main</td>
+                        <td>@i.Description</td>
+                    </tr>
+                }
+            </table>
+        </div>
     }
 }
 
@@ -98,6 +100,7 @@
         public decimal Feels_Like { get; set; }
     }
 
+    // container for the 'weather' attribute
     public class Weather
     {
         public string Main { get; set; }
